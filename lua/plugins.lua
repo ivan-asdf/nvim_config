@@ -6,7 +6,7 @@ return require('packer').startup(function()
 		},
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
-	use 'Mofiqul/vscode.nvim'
+	-- use 'Mofiqul/vscode.nvim'
 	use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
 		require("toggleterm").setup()
 	end}
@@ -14,4 +14,5 @@ return require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	use { 'navarasu/onedark.nvim' }
 end)
