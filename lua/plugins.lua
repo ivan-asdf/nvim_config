@@ -1,18 +1,22 @@
 return require('packer').startup(function()
-	use {
-		'kyazdani42/nvim-tree.lua',
-		requires = {
-			'kyazdani42/nvim-web-devicons', -- optional, for file icons
-		},
-		tag = 'nightly' -- optional, updated every week. (see issue #1193)
-	}
-	-- use 'Mofiqul/vscode.nvim'
-	use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
-		require("toggleterm").setup()
-	end}
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
-	use { 'navarasu/onedark.nvim' }
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icons
+    },
+    tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  }
+  -- use 'Mofiqul/vscode.nvim'
+  use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
+    require("toggleterm").setup()
+  end}
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
+  use { 'navarasu/onedark.nvim' }
+  use {'konapun/vacuumline.nvim', requires = {
+    'glepnir/galaxyline.nvim', branch = 'main',
+    'kyazdani42/nvim-web-devicons', opt = true
+  }, config = function() require('vacuumline').setup() end} -- Add this line to use defaults; otherwise, call `setup` with your config as described below wherever you configure your plugins
 end)
