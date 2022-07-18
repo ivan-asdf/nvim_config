@@ -15,6 +15,9 @@ return require('packer').startup(function()
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	use {
+		'windwp/nvim-ts-autotag'
+	}
 	use {'konapun/vacuumline.nvim', requires = {
 		'glepnir/galaxyline.nvim', branch = 'main',
 		'kyazdani42/nvim-web-devicons', opt = true

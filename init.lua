@@ -36,10 +36,14 @@ function _G.set_terminal_keymaps()
 	vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
 end
 
+
 -- call add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
 require'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "c", "lua", "rust", "go" },
+	ensure_installed = { "c", "lua", "rust", "go", "html", "javascript" },
+	autotag = {
+		enable = true,
+	},
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
@@ -64,6 +68,7 @@ require'nvim-treesitter.configs'.setup {
 		additional_vim_regex_highlighting = false,
 	},
 }
+require('nvim-ts-autotag').setup()
 
 require('vacuumline').setup({
 	theme = require('vacuumline.theme.one-dark')
