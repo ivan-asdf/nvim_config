@@ -23,13 +23,16 @@ require("nvim-tree").setup({
 	}
 })
 require('nvim-web-devicons').setup()
-require("toggleterm").setup{
-	open_mapping = [[<C-t>]]
-}
+--require("toggleterm").setup{
+	--open_mapping = [[<C-t>]]
+--}
+require('vacuumline').setup({
+	theme = require('vacuumline.theme.nord')
+})
+
 -- vim.g.nvim_tree_show_icons = {git = 1, folders =  0, files = 0, folder_arrows = 0}
 function _G.set_terminal_keymaps()
-	local opts = {noremap = true}
-	vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+	local opts = {noremap = true} vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
 	vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts) vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
 	vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
 	vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
@@ -48,19 +51,7 @@ require'nvim-treesitter.configs'.setup {
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
 
-	-- List of parsers to ignore installing (for "all")
-	ignore_install = { "javascript" },
-
 	highlight = {
-		-- `false` will disable the whole extension
-		enable = true,
-
-		-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-		-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-		-- the name of the parser)
-		-- list of language that will be disabled
-		disable = { "c", "rust" },
-
 		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 		-- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -70,10 +61,8 @@ require'nvim-treesitter.configs'.setup {
 }
 require('nvim-ts-autotag').setup()
 
-require('vacuumline').setup({
-	theme = require('vacuumline.theme.one-dark')
-})
-
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -103,27 +92,29 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
 	vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-	vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+	vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-require('lspconfig').gopls.setup{
-	on_attach = on_attach
+local lsp_flags = {
+	-- This is the default in Nvim 0.7+
+	debounce_text_changes = 150,
 }
-
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-local lspconfig = require('lspconfig')
-
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup {
-		-- on_attach = my_custom_on_attach,
-		capabilities = capabilities,
+require('lspconfig')['pyright'].setup{
+	on_attach = on_attach,
+	flags = lsp_flags,
+}
+require('lspconfig')['tsserver'].setup{
+	on_attach = on_attach,
+	flags = lsp_flags,
+}
+require('lspconfig')['rust_analyzer'].setup{
+	on_attach = on_attach,
+	flags = lsp_flags,
+	-- Server-specific settings...
+	settings = {
+		["rust-analyzer"] = {}
 	}
-end
+}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
