@@ -3,6 +3,9 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.autoread = true
 vim.opt.scrolloff=8
+
+vim.cmd([[set expandtab]])
+
 vim.cmd([[set noswapfile]])
 vim.cmd([[set nobackup]])
 vim.cmd([[set nu]])
