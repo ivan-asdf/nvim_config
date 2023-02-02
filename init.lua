@@ -43,7 +43,7 @@ end
 -- call add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
 require'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "c", "lua", "rust", "go", "html", "javascript" },
+	ensure_installed = { "c", "lua", "rust", "go", "html", "javascript", "css" },
 	autotag = {
 		enable = true,
 	},
@@ -118,6 +118,20 @@ require('lspconfig')['rust_analyzer'].setup{
 require('lspconfig')['gopls'].setup{
 	on_attach = on_attach,
 	flags = lsp_flags,
+}
+
+require('lspconfig')['gopls'].setup{
+	on_attach = on_attach,
+	flags = lsp_flags,
+}
+
+-- css ls and snipets
+--Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities,
 }
 
 -- luasnip setup
