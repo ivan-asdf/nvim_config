@@ -43,7 +43,7 @@ end
 -- call add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
 require'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "c", "lua", "rust", "go", "html", "javascript", "css" },
+	ensure_installed = { "c", "cpp", "lua", "rust", "go", "html", "javascript", "css" },
 	autotag = {
 		enable = true,
 	},
@@ -99,6 +99,7 @@ local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
+require'lspconfig'.sourcekit.setup{}
 require('lspconfig')['pyright'].setup{
 	on_attach = on_attach,
 	flags = lsp_flags,
@@ -119,7 +120,6 @@ require('lspconfig')['gopls'].setup{
 	on_attach = on_attach,
 	flags = lsp_flags,
 }
-
 require('lspconfig')['gopls'].setup{
 	on_attach = on_attach,
 	flags = lsp_flags,
