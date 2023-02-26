@@ -7,10 +7,9 @@ function return_to_past_window()
 	-- vim.api.nvim_command('wincmd p')
 end
 
-require('onedark').setup {
-	style = 'light'
-}
-
+-- require('onedark').setup {
+	 -- style = 'light'
+--}
 
 require("nvim-tree").setup({
 	view = {
@@ -43,15 +42,17 @@ end
 -- call add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
 require'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "c", "cpp", "lua", "rust", "go", "html", "javascript", "css" },
+	ensure_installed = { "c", "cpp", "lua", "rust", "go", "html", "javascript", "css", "nix" },
 	autotag = {
 		enable = true,
 	},
+  auto_install = true,
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
 
-	highlight = {
+	highlight = { 
+    enable = true,
 		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
 		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
 		-- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -120,10 +121,6 @@ require('lspconfig')['gopls'].setup{
 	on_attach = on_attach,
 	flags = lsp_flags,
 }
-require('lspconfig')['gopls'].setup{
-	on_attach = on_attach,
-	flags = lsp_flags,
-}
 
 -- css ls and snipets
 --Enable (broadcasting) snippet capability for completion
@@ -133,6 +130,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 require'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
+require'lspconfig'.rnix.setup{}
 
 -- luasnip setup
 local luasnip = require 'luasnip'

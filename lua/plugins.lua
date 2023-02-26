@@ -14,6 +14,7 @@ local packer_bootstrap = ensure_packer()
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'Ivan-Asdf/onedark.nvim'
+  use { 'catppuccin/nvim', as = 'catppuccin' }
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {

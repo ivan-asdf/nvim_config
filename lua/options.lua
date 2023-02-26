@@ -19,7 +19,8 @@ vim.cmd([[set cmdheight=2]])
 vim.cmd([[set updatetime=50]])
 
 vim.o.background = "light"
-vim.cmd([[colorscheme onedark]])
+-- vim.cmd([[colorscheme onedark]])
+vim.cmd.colorscheme 'catppuccin'
 -- vim.cmd([[set splitbelow]])
 -- vim.cmd([[termwinsize=10x0]])
 vim.cmd([[highlight iCursor guifg=pink guibg=red]])
