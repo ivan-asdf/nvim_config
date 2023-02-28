@@ -130,7 +130,19 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 require'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
-require'lspconfig'.rnix.setup{}
+--require'lspconfig'.rnix.setup{}
+require'lspconfig'.nil_ls.setup {
+	on_attach = on_attach,
+	flags = lsp_flags,
+  settings = {
+    ['nil'] = {
+      testSetting = 42,
+      formatting = {
+        command = { "nixpkgs-fmt" },
+      },
+    },
+  },
+}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
